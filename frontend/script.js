@@ -1,5 +1,4 @@
-const API_URL = "http://YOUR_API_PUBLIC_IP:5000/upload";
-// Example: http://54.123.44.22:5000/upload
+const backendIP = "127.0.0.1";
 
 const form = document.getElementById("uploadForm");
 const responseBox = document.getElementById("response");
@@ -16,7 +15,7 @@ form.addEventListener("submit", async (e) => {
     responseBox.textContent = "Uploading...";
 
     try {
-        const res = await fetch("/upload", {
+        const res = await fetch(`http://${backendIP}:5000/upload`, {
             method: "POST",
             body: formData
         });
