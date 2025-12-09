@@ -11,9 +11,7 @@ def parse_resume(file_path):
         "projects": []
     }
 
-    # -----------------------------
     # Extract text from PDF or DOCX
-    # -----------------------------
     if file_path.endswith(".pdf"):
         with open(file_path, 'rb') as f:
             reader = PyPDF2.PdfReader(f)
@@ -24,9 +22,7 @@ def parse_resume(file_path):
 
     lines = [l.strip() for l in text.splitlines() if l.strip()]
 
-    # -----------------------------
     # Section detection
-    # -----------------------------
     section = None
     buffer = []
 
@@ -70,9 +66,7 @@ def parse_resume(file_path):
             buffer = []
             continue
 
-        # -----------------------------
         # PERSONAL INFORMATION SECTION
-        # -----------------------------
         if section == "personal":
             key_val = line.split(":", 1)
             if len(key_val) == 2:
@@ -81,9 +75,7 @@ def parse_resume(file_path):
                 data["personal"][key] = val
             continue
 
-        # -----------------------------
         # EDUCATION SECTION
-        # -----------------------------
         if section == "education":
             if re.match(r".*\d{4}", line):  # line containing dates
                 flush_education()
@@ -92,9 +84,7 @@ def parse_resume(file_path):
                 buffer.append(line)
             continue
 
-        # -----------------------------
         # EXPERIENCE SECTION
-        # -----------------------------
         if section == "experience":
             # Detect start of new job by date pattern
             if re.search(r"\d{4}", line):
@@ -104,18 +94,14 @@ def parse_resume(file_path):
                 buffer.append(line)
             continue
 
-        # -----------------------------
         # SKILLS SECTION
-        # -----------------------------
         if section == "skills":
             if ":" in line:
                 key, val = line.split(":", 1)
                 data["skills"][key.strip()] = [v.strip() for v in val.split(",")]
             continue
 
-        # -----------------------------
         # PROJECTS SECTION
-        # -----------------------------
         if section == "projects":
             if "Technologies Used:" in line:
                 buffer.append(line)
