@@ -3,8 +3,10 @@ import boto3
 from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from resume_parser import parse_resume
+from flask_cors import CORS
 
 app = Flask(__name__, static_folder='../frontend', static_url_path='/')
+CORS(app)
 
 S3_BUCKET = os.environ.get("RESUME_BUCKET_NAME")
 s3_client = boto3.client('s3')
