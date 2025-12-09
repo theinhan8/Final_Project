@@ -1,4 +1,4 @@
-const backendIP = "127.0.0.1";
+const backendIP = "18.223.170.66";
 
 const form = document.getElementById("uploadForm");
 const responseBox = document.getElementById("response");
